@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class {
+return new class
+{
     public function up()
     {
         Schema::create('chapa_et_transactions', function (Blueprint $table) {
