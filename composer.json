@@ -1,0 +1,55 @@
+{
+    "name": "alazark94/cashier-et",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Alazark94\\CashierEt\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Alazar Kassahun",
+            "email": "alazar.kas@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/http": "^11.0 || ^12.0",
+        "moneyphp/money": "^4.7"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.12.0 || ^10.1",
+        "phpunit/phpunit": "^10.5.35 || ^11.5.15",
+        "pestphp/pest": "^2.0 || ^3.0 || ^4.0",
+        "laravel/pint": "^1.24",
+        "rector/rector": "^2.1",
+        "larastan/larastan": "^3.6"
+    },
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "refactor": "rector",
+        "lint": "pint",
+        "analyze": "phpstan",
+        "test:lint": "pint --test",
+        "test:refactor": "rector --only-suffix=Test.php",
+        "test": [
+            "@lint",
+            "@refactor",
+            "@test:lint",
+            "@test:refactor",
+            "@analyze",
+            "pest"
+        ]
+    }
+}
