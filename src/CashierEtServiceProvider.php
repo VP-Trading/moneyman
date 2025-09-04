@@ -10,11 +10,16 @@ class CashierEtServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        // Register any application services.
+        $this->mergeConfigFrom(__DIR__ . '/../config/cashier-et.php', 'cashier-et');
     }
 
     public function boot()
     {
-        $this->app->singleton('cashier-et', fn ($app) => new CashierEt);
+        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+
+        $this->publishesMigrations([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ]);
+        $this->app->singleton('cashier-et', fn($app) => new CashierEtManager());
     }
 }

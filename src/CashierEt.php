@@ -1,13 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Alazark94\CashierEt;
+
+use Alazark94\CashierEt\Enums\Provider as ProviderEnum;
+use Alazark94\CashierEt\Providers\Provider;
 
 class CashierEt
 {
-    public function __construct()
+    public static function provider(ProviderEnum|string $provider): Provider
     {
-        // Initialization code
+        return app(CashierEtManager::class)->resolve($provider);
     }
 }

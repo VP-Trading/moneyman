@@ -20,7 +20,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
-            // \Vptrading\ChapaLaravel\ChapaServiceProvider::class,
+            \Alazark94\CashierEt\CashierEtServiceProvider::class,
         ];
     }
 
