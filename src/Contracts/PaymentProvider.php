@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt\Contracts;
+namespace Alazark94\MoneyMan\Contracts;
 
-use Alazark94\CashierEt\Contracts\Responses\PaymentInitiateResponse;
-use Alazark94\CashierEt\Contracts\Responses\PaymentRefundResponse;
-use Alazark94\CashierEt\Contracts\Responses\PaymentVerifyResponse;
-use Alazark94\CashierEt\ValueObjects\User;
+use Alazark94\MoneyMan\Contracts\Responses\PaymentInitiateResponse;
+use Alazark94\MoneyMan\Contracts\Responses\PaymentRefundResponse;
+use Alazark94\MoneyMan\Contracts\Responses\PaymentVerifyResponse;
+use Alazark94\MoneyMan\ValueObjects\User;
 use Money\Money;
 
 interface PaymentProvider

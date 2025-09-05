@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt\ValueObjects;
+namespace Alazark94\MoneyMan\ValueObjects;
 
 readonly class User
 {

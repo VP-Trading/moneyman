@@ -2,6 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt\Contracts\Responses;
+namespace Alazark94\MoneyMan\Contracts\Responses;
 
 interface PaymentVerifyResponse extends TransactionResponse {}

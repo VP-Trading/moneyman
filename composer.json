@@ -1,10 +1,10 @@
 {
-    "name": "alazark94/cashier-et",
+    "name": "alazark94/moneyman",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Alazark94\\CashierEt\\": "src/"
+            "Alazark94\\MoneyMan\\": "src/"
         }
     },
     "autoload-dev": {
@@ -29,7 +29,8 @@
         "pestphp/pest": "^2.0 || ^3.0 || ^4.0",
         "laravel/pint": "^1.24",
         "rector/rector": "^2.1",
-        "larastan/larastan": "^3.6"
+        "larastan/larastan": "^3.6",
+        "pestphp/pest-plugin-type-coverage": "^3.6"
     },
     "prefer-stable": true,
     "config": {

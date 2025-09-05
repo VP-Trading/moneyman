@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt;
+namespace Alazark94\MoneyMan;
 
-use Alazark94\CashierEt\Enums\Provider as ProviderEnum;
-use Alazark94\CashierEt\Providers\Chapa\Chapa;
-use Alazark94\CashierEt\Providers\Provider;
+use Alazark94\MoneyMan\Enums\Provider as ProviderEnum;
+use Alazark94\MoneyMan\Providers\Chapa\Chapa;
+use Alazark94\MoneyMan\Providers\Provider;
 
-class CashierEtManager
+class MoneyManManager
 {
     public function resolve(ProviderEnum|string $provider): Provider
     {

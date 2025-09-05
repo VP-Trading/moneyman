@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt\Providers\Chapa\Factories;
+namespace Alazark94\MoneyMan\Providers\Chapa\Factories;
 
-use Alazark94\CashierEt\Contracts\Factories\ProviderResponse;
-use Alazark94\CashierEt\Providers\Chapa\Dtos\PaymentInitiateResponse;
+use Alazark94\MoneyMan\Contracts\Factories\ProviderResponse;
+use Alazark94\MoneyMan\Providers\Chapa\Dtos\PaymentInitiateResponse;
 
 class PaymentInitiateFactory implements ProviderResponse
 {
@@ -18,6 +18,7 @@ class PaymentInitiateFactory implements ProviderResponse
                 $validationErrors = $response['message'];
             }
         }
+
         return new PaymentInitiateResponse(
             status: $response['status'] ?? 'error',
             message: $message ?? null,

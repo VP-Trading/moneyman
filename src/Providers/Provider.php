@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt\Providers;
+namespace Alazark94\MoneyMan\Providers;
 
-use Alazark94\CashierEt\Contracts\PaymentProvider;
-use Alazark94\CashierEt\Contracts\Responses\PaymentInitiateResponse;
-use Alazark94\CashierEt\Contracts\Responses\PaymentRefundResponse;
-use Alazark94\CashierEt\Contracts\Responses\PaymentVerifyResponse;
-use Alazark94\CashierEt\ValueObjects\User;
+use Alazark94\MoneyMan\Contracts\PaymentProvider;
+use Alazark94\MoneyMan\Contracts\Responses\PaymentInitiateResponse;
+use Alazark94\MoneyMan\Contracts\Responses\PaymentRefundResponse;
+use Alazark94\MoneyMan\Contracts\Responses\PaymentVerifyResponse;
+use Alazark94\MoneyMan\ValueObjects\User;
 use Money\Currencies\ISOCurrencies;
 use Money\Formatter\DecimalMoneyFormatter;
 use Money\Money;

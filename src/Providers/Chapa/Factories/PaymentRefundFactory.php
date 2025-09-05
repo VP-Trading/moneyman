@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt\Providers\Chapa\Factories;
+namespace Alazark94\MoneyMan\Providers\Chapa\Factories;
 
-use Alazark94\CashierEt\Contracts\Factories\ProviderResponse;
-use Alazark94\CashierEt\Providers\Chapa\Dtos\PaymentRefundResponse;
+use Alazark94\MoneyMan\Contracts\Factories\ProviderResponse;
+use Alazark94\MoneyMan\Providers\Chapa\Dtos\PaymentRefundResponse;
 
 class PaymentRefundFactory implements ProviderResponse
 {

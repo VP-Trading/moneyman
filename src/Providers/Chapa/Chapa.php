@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt\Providers\Chapa;
+namespace Alazark94\MoneyMan\Providers\Chapa;
 
-use Alazark94\CashierEt\Providers\Chapa\Dtos\PaymentInitiateResponse;
-use Alazark94\CashierEt\Providers\Chapa\Dtos\PaymentRefundResponse;
-use Alazark94\CashierEt\Providers\Chapa\Dtos\PaymentVerifyResponse;
-use Alazark94\CashierEt\Providers\Chapa\Factories\PaymentInitiateFactory;
-use Alazark94\CashierEt\Providers\Chapa\Factories\PaymentRefundFactory;
-use Alazark94\CashierEt\Providers\Chapa\Factories\PaymentVerifyFactory;
-use Alazark94\CashierEt\Providers\Provider;
-use Alazark94\CashierEt\ValueObjects\User;
+use Alazark94\MoneyMan\Providers\Chapa\Dtos\PaymentInitiateResponse;
+use Alazark94\MoneyMan\Providers\Chapa\Dtos\PaymentRefundResponse;
+use Alazark94\MoneyMan\Providers\Chapa\Dtos\PaymentVerifyResponse;
+use Alazark94\MoneyMan\Providers\Chapa\Factories\PaymentInitiateFactory;
+use Alazark94\MoneyMan\Providers\Chapa\Factories\PaymentRefundFactory;
+use Alazark94\MoneyMan\Providers\Chapa\Factories\PaymentVerifyFactory;
+use Alazark94\MoneyMan\Providers\Provider;
+use Alazark94\MoneyMan\ValueObjects\User;
 use Illuminate\Support\Facades\Http;
 use Money\Money;
 
@@ -25,12 +25,12 @@ class Chapa extends Provider
     {
         parent::__construct();
 
-        if (empty(config('cashier-et.chapa.secret_key'))) {
+        if (empty(config('moneyman.chapa.secret_key'))) {
             throw new \InvalidArgumentException('Chapa secret key is not set.');
         }
 
-        $this->baseUrl = config('cashier-et.chapa.base_url');
-        $this->secretKey = config('cashier-et.chapa.secret_key');
+        $this->baseUrl = config('moneyman.chapa.base_url');
+        $this->secretKey = config('moneyman.chapa.secret_key');
     }
 
     #[\Override]
@@ -46,7 +46,7 @@ class Chapa extends Provider
                 'phone_number' => $user->phoneNumber,
                 'return_url' => $returnUrl,
                 'callback_url' => route('chapa.webhook'),
-                'tx_ref' => config('chapa.ref_prefix') . str()->random(10),
+                'tx_ref' => config('chapa.ref_prefix').str()->random(10),
                 'customization' => $parameters['customization'] ?? [],
             ]);
 

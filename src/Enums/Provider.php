@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt\Enums;
+namespace Alazark94\MoneyMan\Enums;
 
 enum Provider: string
 {

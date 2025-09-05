@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt\Http\Controllers;
+namespace Alazark94\MoneyMan\Providers\Chapa\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Vptrading\ChapaLaravel\Models\ChapaWebhookEvent;
 
 class WebhookController
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\CashierEt\Providers\Chapa\Dtos;
+namespace Alazark94\MoneyMan\Providers\Chapa\Dtos;
 
-use Alazark94\CashierEt\Contracts\Responses\PaymentRefundResponse as PaymentRefundResponseContract;
+use Alazark94\MoneyMan\Contracts\Responses\PaymentRefundResponse as PaymentRefundResponseContract;
 
 class PaymentRefundResponse implements PaymentRefundResponseContract
 {
