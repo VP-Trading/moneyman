@@ -2,6 +2,21 @@
 
 declare(strict_types=1);
 
+use Alazark94\MoneyMan\Enums\Provider;
+use Alazark94\MoneyMan\MoneyMan;
+use Alazark94\MoneyMan\ValueObjects\User;
+use Money\Money;
+
 test('example', function (): void {
-    config()->set('moneyman.chapa.secret_key', 'CHASECK_TEST-ieiAS2tVES55MpNkDOFGKFrUCf9WLKya');
+    MoneyMan::provider(Provider::Telebirr)
+        ->initiate(
+            Money::ETB(10000),
+            new User(
+                firstName: 'Alazar',
+                lastName: 'Kassahun',
+                email: 'alazar@gmail.com',
+                phoneNumber: '0913517005'
+            ),
+            returnUrl: 'https://vptrading.et'
+        );
 });

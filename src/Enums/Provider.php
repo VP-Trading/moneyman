@@ -6,9 +6,7 @@ namespace Alazark94\MoneyMan\Enums;
 
 enum Provider: string
 {
-    case TelebirrUssd = 'telebirr_ussd';
-
-    case TelebirrH5 = 'telebirr_h5';
+    case Telebirr = 'telebirr';
 
     case Chapa = 'chapa';
 
