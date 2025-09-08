@@ -7,6 +7,7 @@ namespace Alazark94\MoneyMan;
 use Alazark94\MoneyMan\Enums\Provider as ProviderEnum;
 use Alazark94\MoneyMan\Providers\Chapa\Chapa;
 use Alazark94\MoneyMan\Providers\Provider;
+use Alazark94\MoneyMan\Providers\Telebirr\Telebirr;
 
 class MoneyManManager
 {
@@ -35,5 +36,10 @@ class MoneyManManager
     protected function createChapaProvider(): Provider
     {
         return new Chapa;
+    }
+
+    protected function createTelebirrProvider(): Provider
+    {
+        return new Telebirr;
     }
 }

@@ -10,16 +10,15 @@ class MoneyManServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/moneyman.php', 'moneyman');
+        $this->mergeConfigFrom(__DIR__ . '/../config/moneyman.php', 'moneyman');
     }
 
     public function boot(): void
     {
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-
-        $this->publishesMigrations([
-            __DIR__.'/../database/migrations' => database_path('migrations'),
+        $this->publishes([
+            __DIR__ . '/../config/moneyman.php' => config_path('moneyman.php')
         ]);
-        $this->app->singleton('moneyman', fn () => new MoneyManManager);
+
+        $this->app->singleton('moneyman', fn() => new MoneyManManager);
     }
 }
