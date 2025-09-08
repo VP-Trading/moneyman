@@ -34,10 +34,10 @@ class Telebirr extends Provider
         $order = $this->createOrder($request);
 
         $rawRequest = $this->createRawRequest($order['biz_content']['prepay_id']);
-
+        // dd($rawRequest);
         $request = [
             'timestamp' => (string) now()->timestamp,
-            'nonce_str' => str()->random(10),
+            'nonce_str' => str()->random(32),
             'method' => 'payment.checkout',
             'app_code' => config('moneyman.providers.telebirr.merchant_app_id'),
             'version' => '1.0',
@@ -53,12 +53,13 @@ class Telebirr extends Provider
 
         $request['sign'] = $this->sign($request);
         $request['sign_type'] = 'SHA256WithRSA';
+        // dd($request);
 
         // dd(json_encode($request, JSON_UNESCAPED_SLASHES));
 
         $response = Http::withoutVerifying()
             ->withToken(str()->chopStart($this->generateFabricToken(), 'Bearer '))
-            ->post(config('moneyman.providers.telebirr.base_url') . '/payment/v1/app/checkout', $request);
+            ->post(config('moneyman.providers.telebirr.base_url') . '/payment/v1/app/checkout?', $request);
 
         // dd($response->json());
 
@@ -172,7 +173,7 @@ class Telebirr extends Provider
         $maps = [
             "appid"      => config('moneyman.providers.telebirr.merchant_app_id'),
             "merch_code" => config('moneyman.providers.telebirr.short_code'),
-            "nonce_str"  => str()->random(10),
+            "nonce_str"  => str()->random(32),
             "prepay_id"  => $prepayId,
             "timestamp"  => (string) now()->timestamp,
         ];
@@ -180,7 +181,7 @@ class Telebirr extends Provider
 
         $sign = $this->sign($maps);
 
-        $maps['sign'] = $sign;
+        $maps['sign'] = urlencode($sign);
         $maps['sign_type'] = 'SHA256WithRSA';
 
         $pairs = [];
