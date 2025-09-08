@@ -22,7 +22,8 @@
         "php": "^8.2",
         "illuminate/http": "^11.0 || ^12.0",
         "moneyphp/money": "^4.7",
-        "phpseclib/phpseclib": "^3.0"
+        "phpseclib/phpseclib": "^3.0",
+        "firebase/php-jwt": "^6.11"
     },
     "require-dev": {
         "orchestra/testbench": "^9.12.0 || ^10.1",

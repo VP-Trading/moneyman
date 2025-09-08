@@ -1,0 +1,25 @@
+<?php
+
+namespace Alazark94\MoneyMan\Providers\SantimPay\Factories;
+
+use Alazark94\MoneyMan\Contracts\Factories\ProviderResponse;
+use Alazark94\MoneyMan\Contracts\Responses\TransactionResponse;
+use Alazark94\MoneyMan\Providers\SantimPay\Dtos\PaymentInitiateResponse;
+
+class PaymentInitiateFactory implements ProviderResponse
+{
+    public static function fromApiResponse(array $response): TransactionResponse
+    {
+        if (array_key_exists('reason', $response)) {
+            $message = $response['reason'];
+        }
+
+        return new PaymentInitiateResponse(
+            status: array_key_exists('url', $response) ? 'success' : 'error',
+            message: $message ?? null,
+            transactionId: null,
+            checkoutUrl: $response['url'] ?? null,
+            validationErrors: $validationErrors ?? []
+        );
+    }
+}

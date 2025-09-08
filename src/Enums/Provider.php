@@ -10,5 +10,7 @@ enum Provider: string
 
     case Chapa = 'chapa';
 
+    case SantimPay = 'santimpay';
+
     case SafaricomUssd = 'safaricom_ussd';
 }

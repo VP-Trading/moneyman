@@ -58,7 +58,7 @@ class Telebirr extends Provider
             ->withToken(str()->chopStart($this->generateFabricToken(), 'Bearer '))
             ->post(config('moneyman.providers.telebirr.base_url') . '/payment/v1/app/checkout', $request);
 
-        dd($response->json());
+        // dd($response->json());
 
         dd('https://developerportal.ethiotelebirr.et:38443/payment/web/paygate/?' . $rawRequest . "&version=1.0&trade_type=Checkout");
 

@@ -25,12 +25,12 @@ class Chapa extends Provider
     {
         parent::__construct();
 
-        if (empty(config('moneyman.chapa.secret_key'))) {
+        if (empty(config('moneyman.providers.chapa.secret_key'))) {
             throw new \InvalidArgumentException('Chapa secret key is not set.');
         }
 
-        $this->baseUrl = config('moneyman.chapa.base_url');
-        $this->secretKey = config('moneyman.chapa.secret_key');
+        $this->baseUrl = config('moneyman.providers.chapa.base_url');
+        $this->secretKey = config('moneyman.providers.chapa.secret_key');
     }
 
     #[\Override]
@@ -45,8 +45,8 @@ class Chapa extends Provider
                 'email' => $user->email,
                 'phone_number' => $user->phoneNumber,
                 'return_url' => $returnUrl,
-                'callback_url' => route('chapa.webhook'),
-                'tx_ref' => config('chapa.ref_prefix').str()->random(10),
+                'callback_url' => config('moneyman.providers.chapa.callback_url'),
+                'tx_ref' => config('moneyman.ref_prefix') . str()->random(10),
                 'customization' => $parameters['customization'] ?? [],
             ]);
 
