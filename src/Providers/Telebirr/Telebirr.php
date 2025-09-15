@@ -27,43 +27,28 @@ class Telebirr extends Provider
         }
     }
 
-    public function initiate(Money $money, User $user, string $returnUrl, ?array $parameters = []): PaymentInitiateResponse
+    public function initiate(Money $money, User $user, string $returnUrl, ?string $reason = null, ?array $parameters = []): PaymentInitiateResponse
     {
-        $request = $this->prepareRequest(Money::ETB(1000), 'https://vptrading.et');
+        try {
 
-        $order = $this->createOrder($request);
+            if (!$reason) {
+                throw new \InvalidArgumentException('The product name parameter is required when using telebirr as a provider.');
+            }
 
-        $rawRequest = $this->createRawRequest($order['biz_content']['prepay_id']);
-        // dd($rawRequest);
-        $request = [
-            'timestamp' => (string) now()->timestamp,
-            'nonce_str' => str()->random(32),
-            'method' => 'payment.checkout',
-            'app_code' => config('moneyman.providers.telebirr.merchant_app_id'),
-            'version' => '1.0',
-            'biz_content' => [
-                'trade_type' => 'WebCheckout',
-                'raw_request' => $rawRequest,
-            ]
-        ];
+            if ($money->getCurrency()->getCode() !== 'ETB') {
+                throw new \InvalidArgumentException('The currency must be ETB when using telebirr as a provider.');
+            }
 
-        // dd(json_encode($request, JSON_UNESCAPED_SLASHES), $this->sign($request));
-        $request['sign'] = $this->sign($request);
-        $request['sign_type'] = 'SHA256WithRSA';
-        // dd($request);
+            $request = $this->prepareRequest($money, $reason, $returnUrl);
 
-        // dd(json_encode($request, JSON_UNESCAPED_SLASHES));
+            $order = $this->createOrder($request);
 
-        $response = Http::withoutVerifying()
-            ->withToken(str()->chopStart($this->generateFabricToken(), 'Bearer '))
-            ->post(config('moneyman.providers.telebirr.base_url') . '/payment/v1/app/checkout', $request);
+            $rawRequest = $this->createRawRequest($order['biz_content']['prepay_id']);
+        } catch (Exception $e) {
+            return new PaymentInitiateResponse('error', $e->getMessage());
+        }
 
-        // dd($response->json());
-
-        dd('https://developerportal.ethiotelebirr.et:38443/payment/web/paygate/?' . $rawRequest . "&version=1.0&trade_type=Checkout");
-
-        // Http::post('https://developerportal.ethiotelebirr.et:38443/payment/web/paygate?' . $this->createRawRequest('018c19ad503a02749eb9959c115a0f5ff89009') . "&version=1.0&trade_type=Checkout", )
-        return new PaymentInitiateResponse('testing', 'testing');
+        return new PaymentInitiateResponse('success', checkoutUrl: config('moneyman.providers.telebirr.web_base_url') . '?' . $rawRequest . "&version=1.0&trade_type=Checkout", message: '', transactionId: $order['biz_content']['merch_order_id']);
     }
 
     public function verify(string $transactionId): PaymentVerifyResponse
@@ -154,21 +139,22 @@ class Telebirr extends Provider
         return $response->json();
     }
 
-    private function prepareRequest(Money $amount, string $redirectUrl)
+    private function prepareRequest(Money $amount, string $reason, string $redirectUrl)
     {
-        // dd(config('moneyman.providers.telebirr.timeout'));
         $bizContent = [
             'notify_url' => config('moneyman.providers.telebirr.callback_url'),
             'redirect_url' => $redirectUrl,
             'appid' => config('moneyman.providers.telebirr.merchant_app_id'),
             'merch_code' => config('moneyman.providers.telebirr.short_code'),
-            'merch_order_id' =>  str()->random(32),
+            'merch_order_id' =>  implode('', explode('_', config('moneyman.ref_prefix'))) . str()->random(10),
             'trade_type' => 'WebCheckout',
-            'title' => 'Checkout',
+            'title' => $reason,
             'total_amount' => $this->formatter->format($amount),
             'trans_currency' => $amount->getCurrency()->getCode(),
-            'timeout_express' => '120m',
-            'callback_info' => 'Test'
+            'timeout_express' => (string) config('moneyman.providers.telebirr.timeout') . 'm',
+            'payee_identifier' => config('moneyman.providers.telebirr.short_code'),
+            'payee_identifier_type' => '04',
+            'payee_type' => '5000'
         ];
 
         $request = [
@@ -210,24 +196,10 @@ class Telebirr extends Provider
 
         $private = $private->withHash('sha256');
 
+        /**
+         * @ignore undefined method ignore
+         */
         return base64_encode($private->sign($stringApplet));
-    }
-
-
-    private function sortedString($stringApplet)
-    {
-        $stringExplode = '';
-        $sortedArray = explode("&", $stringApplet);
-        sort($sortedArray);
-        foreach ($sortedArray as $x => $x_value) {
-            if ($stringExplode == '') {
-                $stringExplode = $x_value;
-            } else {
-                $stringExplode = $stringExplode . '&' . $x_value;
-            }
-        }
-
-        return $stringExplode;
     }
 
     private function createRawRequest(string $prepayId)
@@ -238,12 +210,11 @@ class Telebirr extends Provider
             "nonce_str"  => str()->random(32),
             "prepay_id"  => $prepayId,
             "timestamp"  => (string) now()->timestamp,
+            "sign_type" => 'SHA256WithRSA',
         ];
 
         $sign = $this->sign($maps);
-
         $maps['sign'] = $sign;
-        $maps['sign_type'] = 'SHA256WithRSA';
 
         $pairs = [];
         foreach ($maps as $k => $v) {

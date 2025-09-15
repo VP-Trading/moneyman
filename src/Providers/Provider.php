@@ -25,9 +25,15 @@ abstract class Provider implements PaymentProvider
         $this->formatter = new DecimalMoneyFormatter($this->currencies);
     }
 
-    abstract public function initiate(Money $money, User $user, string $returnUrl, ?array $parameters = []): PaymentInitiateResponse;
+    /**
+     * @throws \InvalidArgumentException
+     */
+    abstract public function initiate(Money $money, User $user, string $returnUrl, ?string $reason = null, ?array $parameters = []): PaymentInitiateResponse;
 
     abstract public function verify(string $transactionId): PaymentVerifyResponse;
 
+    /**
+     * @throws \LogicException
+     */
     abstract public function refund(string $transactionId, ?Money $amount = null, ?string $reason = null): PaymentRefundResponse;
 }

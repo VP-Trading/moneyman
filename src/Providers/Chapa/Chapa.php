@@ -34,8 +34,9 @@ class Chapa extends Provider
     }
 
     #[\Override]
-    public function initiate(Money $money, User $user, string $returnUrl, ?array $parameters = []): PaymentInitiateResponse
+    public function initiate(Money $money, User $user, string $returnUrl, ?string $reason = null, ?array $parameters = []): PaymentInitiateResponse
     {
+        $transactionId = config('moneyman.ref_prefix') . str()->random(10);
         $response = Http::withToken($this->secretKey)
             ->post("{$this->baseUrl}/transaction/initialize", [
                 'first_name' => $user->firstName,
@@ -46,11 +47,14 @@ class Chapa extends Provider
                 'phone_number' => $user->phoneNumber,
                 'return_url' => $returnUrl,
                 'callback_url' => config('moneyman.providers.chapa.callback_url'),
-                'tx_ref' => config('moneyman.ref_prefix') . str()->random(10),
+                'tx_ref' => $transactionId,
                 'customization' => $parameters['customization'] ?? [],
             ]);
 
-        return PaymentInitiateFactory::fromApiResponse($response->json());
+        $response = $response->json();
+        $response['transactionId'] = $transactionId;
+
+        return PaymentInitiateFactory::fromApiResponse($response);
     }
 
     public function verify(string $transactionId): PaymentVerifyResponse
