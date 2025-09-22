@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Providers\Telebirr\Dtos;
+namespace Alazark94\MoneyMan\Providers\SantimPay\Dtos;
 
-use Alazark94\MoneyMan\Contracts\Responses\PaymentVerifyResponse as PaymentVerifyResponseContract;
+use Alazark94\MoneyMan\Contracts\Responses\PaymentVerifyResponse as ResponsesPaymentVerifyResponse;
 
-class PaymentVerifyResponse implements PaymentVerifyResponseContract
+class PaymentVerifyResponse implements ResponsesPaymentVerifyResponse
 {
     public function __construct(
         public string $status,
-        public string $message,
+        public ?string $message,
         public ?array $data,
-        public ?string $transactionId
+        public ?string $transactionId = null
     ) {}
 
     public function isSuccessful(): bool
     {
-        return $this->status === 'success';
+        return $this->status === 'COMPLETED';
     }
 
     public function getMessage(): ?string

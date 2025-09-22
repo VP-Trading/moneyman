@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Providers\Telebirr\Dtos;
+namespace Alazark94\MoneyMan\Providers\SantimPay\Dtos;
 
 use Alazark94\MoneyMan\Contracts\Responses\PaymentInitiateResponse as PaymentInitiateResponseContract;
 
@@ -13,9 +13,8 @@ class PaymentInitiateResponse implements PaymentInitiateResponseContract
         public ?string $message,
         public ?string $transactionId = null,
         public ?string $checkoutUrl = null,
-    ) {
-        //
-    }
+        public array $validationErrors = []
+    ) {}
 
     public function isSuccessful(): bool
     {
@@ -30,5 +29,10 @@ class PaymentInitiateResponse implements PaymentInitiateResponseContract
     public function getTransactionId(): ?string
     {
         return $this->transactionId;
+    }
+
+    public function getCheckoutUrl(): ?string
+    {
+        return $this->checkoutUrl;
     }
 }

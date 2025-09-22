@@ -22,7 +22,7 @@ class PaymentInitiateFactory implements ProviderResponse
         return new PaymentInitiateResponse(
             status: $response['status'] ?? 'error',
             message: $message ?? null,
-            transactionId: $response['data']['transaction_id'] ?? null,
+            transactionId: $response['transactionId'] ?? null,
             checkoutUrl: $response['data']['checkout_url'] ?? null,
             validationErrors: $validationErrors ?? []
         );

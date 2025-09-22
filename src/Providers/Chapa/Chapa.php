@@ -25,17 +25,18 @@ class Chapa extends Provider
     {
         parent::__construct();
 
-        if (empty(config('moneyman.chapa.secret_key'))) {
+        if (empty(config('moneyman.providers.chapa.secret_key'))) {
             throw new \InvalidArgumentException('Chapa secret key is not set.');
         }
 
-        $this->baseUrl = config('moneyman.chapa.base_url');
-        $this->secretKey = config('moneyman.chapa.secret_key');
+        $this->baseUrl = config('moneyman.providers.chapa.base_url');
+        $this->secretKey = config('moneyman.providers.chapa.secret_key');
     }
 
     #[\Override]
-    public function initiate(Money $money, User $user, string $returnUrl, ?array $parameters = []): PaymentInitiateResponse
+    public function initiate(Money $money, User $user, string $returnUrl, ?string $reason = null, ?array $parameters = []): PaymentInitiateResponse
     {
+        $transactionId = config('moneyman.ref_prefix').str()->random(10);
         $response = Http::withToken($this->secretKey)
             ->post("{$this->baseUrl}/transaction/initialize", [
                 'first_name' => $user->firstName,
@@ -45,12 +46,15 @@ class Chapa extends Provider
                 'email' => $user->email,
                 'phone_number' => $user->phoneNumber,
                 'return_url' => $returnUrl,
-                'callback_url' => route('chapa.webhook'),
-                'tx_ref' => config('chapa.ref_prefix').str()->random(10),
+                'callback_url' => config('moneyman.providers.chapa.callback_url'),
+                'tx_ref' => $transactionId,
                 'customization' => $parameters['customization'] ?? [],
             ]);
 
-        return PaymentInitiateFactory::fromApiResponse($response->json());
+        $response = $response->json();
+        $response['transactionId'] = $transactionId;
+
+        return PaymentInitiateFactory::fromApiResponse($response);
     }
 
     public function verify(string $transactionId): PaymentVerifyResponse

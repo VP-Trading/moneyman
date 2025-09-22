@@ -12,7 +12,7 @@ use Money\Money;
 
 interface PaymentProvider
 {
-    public function initiate(Money $amount, User $user, string $returnUrl, ?array $parameters = []): PaymentInitiateResponse;
+    public function initiate(Money $amount, User $user, string $returnUrl, ?string $reason = null, ?array $parameters = []): PaymentInitiateResponse;
 
     public function verify(string $transactionId): PaymentVerifyResponse;
 
