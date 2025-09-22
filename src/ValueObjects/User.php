@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\ValueObjects;
+namespace Vptrading\MoneyMan\ValueObjects;
 
 readonly class User
 {

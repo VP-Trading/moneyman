@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan;
+namespace Vptrading\MoneyMan;
 
-use Alazark94\MoneyMan\Enums\Provider as ProviderEnum;
-use Alazark94\MoneyMan\Providers\Provider;
+use Vptrading\MoneyMan\Enums\Provider as ProviderEnum;
+use Vptrading\MoneyMan\Providers\Provider;
 
 class MoneyMan
 {

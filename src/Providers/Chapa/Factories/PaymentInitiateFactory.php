@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Providers\Chapa\Factories;
+namespace Vptrading\MoneyMan\Providers\Chapa\Factories;
 
-use Alazark94\MoneyMan\Contracts\Factories\ProviderResponse;
-use Alazark94\MoneyMan\Providers\Chapa\Dtos\PaymentInitiateResponse;
+use Vptrading\MoneyMan\Contracts\Factories\ProviderResponse;
+use Vptrading\MoneyMan\Providers\Chapa\Dtos\PaymentInitiateResponse;
 
 class PaymentInitiateFactory implements ProviderResponse
 {

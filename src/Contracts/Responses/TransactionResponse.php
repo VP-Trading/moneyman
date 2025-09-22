@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Contracts\Responses;
+namespace Vptrading\MoneyMan\Contracts\Responses;
 
 interface TransactionResponse
 {

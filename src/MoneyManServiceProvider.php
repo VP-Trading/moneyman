@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan;
+namespace Vptrading\MoneyMan;
 
 use Illuminate\Support\ServiceProvider;
 

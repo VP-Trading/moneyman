@@ -1,10 +1,17 @@
 {
-    "name": "alazark94/moneyman",
+    "name": "vp-trading/moneyman",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "laravel",
+        "integration",
+        "santimpay",
+        "chapa",
+        "telebirr"
+    ],
     "autoload": {
         "psr-4": {
-            "Alazark94\\MoneyMan\\": "src/"
+            "Vptrading\\MoneyMan\\": "src/"
         }
     },
     "autoload-dev": {

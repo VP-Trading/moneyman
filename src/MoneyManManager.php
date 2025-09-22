@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan;
+namespace Vptrading\MoneyMan;
 
-use Alazark94\MoneyMan\Enums\Provider as ProviderEnum;
-use Alazark94\MoneyMan\Providers\Chapa\Chapa;
-use Alazark94\MoneyMan\Providers\Provider;
-use Alazark94\MoneyMan\Providers\SantimPay\SantimPay;
-use Alazark94\MoneyMan\Providers\Telebirr\Telebirr;
+use Vptrading\MoneyMan\Enums\Provider as ProviderEnum;
+use Vptrading\MoneyMan\Providers\Chapa\Chapa;
+use Vptrading\MoneyMan\Providers\Provider;
+use Vptrading\MoneyMan\Providers\SantimPay\SantimPay;
+use Vptrading\MoneyMan\Providers\Telebirr\Telebirr;
 
 class MoneyManManager
 {

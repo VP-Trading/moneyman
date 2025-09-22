@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Providers\SantimPay\Dtos;
+namespace Vptrading\MoneyMan\Providers\SantimPay\Dtos;
 
-use Alazark94\MoneyMan\Contracts\Responses\PaymentVerifyResponse as ResponsesPaymentVerifyResponse;
+use Vptrading\MoneyMan\Contracts\Responses\PaymentVerifyResponse as ResponsesPaymentVerifyResponse;
 
 class PaymentVerifyResponse implements ResponsesPaymentVerifyResponse
 {

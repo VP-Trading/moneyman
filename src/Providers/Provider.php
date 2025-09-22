@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Providers;
+namespace Vptrading\MoneyMan\Providers;
 
-use Alazark94\MoneyMan\Contracts\PaymentProvider;
-use Alazark94\MoneyMan\Contracts\Responses\PaymentInitiateResponse;
-use Alazark94\MoneyMan\Contracts\Responses\PaymentRefundResponse;
-use Alazark94\MoneyMan\Contracts\Responses\PaymentVerifyResponse;
-use Alazark94\MoneyMan\ValueObjects\User;
 use Money\Currencies\ISOCurrencies;
 use Money\Formatter\DecimalMoneyFormatter;
 use Money\Money;
+use Vptrading\MoneyMan\Contracts\PaymentProvider;
+use Vptrading\MoneyMan\Contracts\Responses\PaymentInitiateResponse;
+use Vptrading\MoneyMan\Contracts\Responses\PaymentRefundResponse;
+use Vptrading\MoneyMan\Contracts\Responses\PaymentVerifyResponse;
+use Vptrading\MoneyMan\ValueObjects\User;
 
 abstract class Provider implements PaymentProvider
 {
