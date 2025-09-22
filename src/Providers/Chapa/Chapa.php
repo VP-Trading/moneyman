@@ -36,7 +36,7 @@ class Chapa extends Provider
     #[\Override]
     public function initiate(Money $money, User $user, string $returnUrl, ?string $reason = null, ?array $parameters = []): PaymentInitiateResponse
     {
-        $transactionId = config('moneyman.ref_prefix') . str()->random(10);
+        $transactionId = config('moneyman.ref_prefix').str()->random(10);
         $response = Http::withToken($this->secretKey)
             ->post("{$this->baseUrl}/transaction/initialize", [
                 'first_name' => $user->firstName,

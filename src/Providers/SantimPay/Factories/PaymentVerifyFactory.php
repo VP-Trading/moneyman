@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alazark94\MoneyMan\Providers\SantimPay\Factories;
 
 use Alazark94\MoneyMan\Contracts\Factories\ProviderResponse;

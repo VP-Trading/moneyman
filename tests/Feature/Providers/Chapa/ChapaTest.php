@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Alazark94\MoneyMan\MoneyMan;
 use Alazark94\MoneyMan\ValueObjects\User;
 use Illuminate\Support\Facades\Http;
 use Money\Money;
 
-it('initiates a transaction', function () {
+it('initiates a transaction', function (): void {
     Http::fake(function () {
         return Http::response(
             json_decode(
@@ -54,7 +56,7 @@ it('initiates payments with customization', function (): void {
         ),
         'https://example.com/return',
         parameters: [
-            'logo' => 'https://your-logo-url.com'
+            'logo' => 'https://your-logo-url.com',
         ]
     );
 
@@ -66,7 +68,7 @@ it('initiates payments with customization', function (): void {
 it('throws invalid argument exception if secret key is not set', function (): void {
     config()->set('moneyman.providers.chapa.secret_key', null);
 
-    expect(fn() => MoneyMan::provider('chapa')->initiate(
+    expect(fn () => MoneyMan::provider('chapa')->initiate(
         Money::ETB(100),
         new User(
             firstName: 'John',
@@ -79,7 +81,7 @@ it('throws invalid argument exception if secret key is not set', function (): vo
 });
 
 it('verifies payments', function (): void {
-    $tx_ref = 'vp_chapa_' . str()->random(10);
+    $tx_ref = 'vp_chapa_'.str()->random(10);
     Http::fake(function () use ($tx_ref) {
         return Http::response(
             json_decode(
@@ -98,7 +100,7 @@ it('verifies payments', function (): void {
                         "type": "API",
                         "status": "success",
                         "reference": "6jnheVKQEmy",
-                        "tx_ref": "' . $tx_ref . '",
+                        "tx_ref": "'.$tx_ref.'",
                         "customization": {
                             "title": "Payment for my favourite merchant",
                             "description": "I love online payments",
@@ -121,7 +123,7 @@ it('verifies payments', function (): void {
 });
 
 it('can refund transactions', function (): void {
-    $tx_ref = 'vp_chapa_' . str()->random(10);
+    $tx_ref = 'vp_chapa_'.str()->random(10);
     Http::fake(function () {
         return Http::response(
             json_decode(

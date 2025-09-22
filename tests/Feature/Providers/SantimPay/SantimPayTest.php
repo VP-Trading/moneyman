@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Alazark94\MoneyMan\MoneyMan;
 use Alazark94\MoneyMan\ValueObjects\User;
 use Illuminate\Support\Facades\Http;
 use Money\Money;
 
-it('initiates a transaction', function () {
+it('initiates a transaction', function (): void {
     Http::fake(function () {
         return Http::response(
             json_decode(
@@ -30,17 +32,15 @@ it('initiates a transaction', function () {
         reason: 'Payment'
     );
 
-
     expect($response->status)->toBe('success');
     expect($response->checkoutUrl)->toBeString();
     expect($response->transactionId)->toBeString();
 });
 
-
 it('throws invalid argument exception if secret key is not set', function (): void {
     config()->set('moneyman.providers.santimpay.secret_key', null);
 
-    expect(fn() => MoneyMan::provider('santimpay')->initiate(
+    expect(fn () => MoneyMan::provider('santimpay')->initiate(
         Money::ETB(100),
         new User(
             firstName: 'John',
@@ -53,7 +53,7 @@ it('throws invalid argument exception if secret key is not set', function (): vo
 });
 
 it('verifies payments', function (): void {
-    $tx_ref = 'vp_chapa_' . str()->random(10);
+    $tx_ref = 'vp_chapa_'.str()->random(10);
 
     Http::fake(function () use ($tx_ref) {
         return Http::response(
@@ -62,7 +62,7 @@ it('verifies payments', function (): void {
                     "id": "123331d4esdld-88ce-43e8-2a50-9e783a85a",
                     "created_at": "2024-05-08T14:32:39.591722",
                     "updated_at": "2024-05-08T14:32:39.591722",
-                    "thirdPartyId": "' . $tx_ref . '",
+                    "thirdPartyId": "'.$tx_ref.'",
                     "transactionType": "",
                     "merId": "fc20cdb8-653d-4beb-aelb-e75a1d847f45",
                     "merName": "Santimpay dispute PLC",
@@ -101,6 +101,6 @@ it('verifies payments', function (): void {
 
 it('can refund transactions', function (): void {
 
-    expect(fn() => MoneyMan::provider('santimpay')->refund('tx_no', Money::ETB(10000), 'Customer requested refund'))
+    expect(fn () => MoneyMan::provider('santimpay')->refund('tx_no', Money::ETB(10000), 'Customer requested refund'))
         ->toThrow(LogicException::class);
 });

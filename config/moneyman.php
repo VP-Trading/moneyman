@@ -18,7 +18,7 @@ return [
             'private_key' => env('MONEYMAN_SANTIMPAY_PRIVATE_KEY'),
             'merchant_id' => env('MONEYMAN_SANTIMPAY_MERCHANT_ID'),
             'token' => env('MONEYMAN_SANTIMPAY_TOKEN'),
-            'callback_url' => env('MONEYMAN_SANTIMPAY_CALLBACK_URL')
+            'callback_url' => env('MONEYMAN_SANTIMPAY_CALLBACK_URL'),
         ],
         'telebirr' => [
             'merchant_app_id' => env('MONEYMAN_TELEBIRR_MERCHANT_APP_ID'),
@@ -29,7 +29,7 @@ return [
             'base_url' => env('MONEYMAN_TELEBIRR_BASE_URL', 'https://developerportal.ethiotelebirr.et:38443/apiaccess/payment/gateway'),
             'timeout' => env('MONEYMAN_TELEBIRR_TIMEOUT', 5),
             'callback_url' => env('MONEYMAN_TELEBIRR_CALLBACK_URL'),
-            'web_base_url' => env('MONEYMAN_TELEBIRR_WEB_BASE_URL', 'https://developerportal.ethiotelebirr.et:38443/payment/web/paygate')
+            'web_base_url' => env('MONEYMAN_TELEBIRR_WEB_BASE_URL', 'https://developerportal.ethiotelebirr.et:38443/payment/web/paygate'),
         ],
-    ]
+    ],
 ];

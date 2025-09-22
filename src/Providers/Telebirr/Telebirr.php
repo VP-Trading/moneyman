@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alazark94\MoneyMan\Providers\Telebirr;
 
 use Alazark94\MoneyMan\Providers\Provider;
@@ -14,7 +16,6 @@ use phpseclib3\Crypt\PublicKeyLoader;
 
 class Telebirr extends Provider
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +32,7 @@ class Telebirr extends Provider
     {
         try {
 
-            if (!$reason) {
+            if (! $reason) {
                 throw new \InvalidArgumentException('The product name parameter is required when using telebirr as a provider.');
             }
 
@@ -48,7 +49,7 @@ class Telebirr extends Provider
             return new PaymentInitiateResponse('error', $e->getMessage());
         }
 
-        return new PaymentInitiateResponse('success', checkoutUrl: config('moneyman.providers.telebirr.web_base_url') . '?' . $rawRequest . "&version=1.0&trade_type=Checkout", message: '', transactionId: $order['biz_content']['merch_order_id']);
+        return new PaymentInitiateResponse('success', checkoutUrl: config('moneyman.providers.telebirr.web_base_url').'?'.$rawRequest.'&version=1.0&trade_type=Checkout', message: '', transactionId: $order['biz_content']['merch_order_id']);
     }
 
     public function verify(string $transactionId): PaymentVerifyResponse
@@ -62,8 +63,8 @@ class Telebirr extends Provider
             'biz_content' => [
                 'appid' => config('moneyman.providers.telebirr.merchant_app_id'),
                 'merch_code' => config('moneyman.providers.telebirr.short_code'),
-                'merch_order_id' => 'glRDRSe9U6'
-            ]
+                'merch_order_id' => 'glRDRSe9U6',
+            ],
         ];
 
         $request['sign'] = $this->sign($request);
@@ -71,8 +72,7 @@ class Telebirr extends Provider
 
         $response = Http::withoutVerifying()
             ->withToken(str()->chopStart($this->generateFabricToken(), 'Bearer '))
-            ->post(config('moneyman.providers.telebirr.base_url') . '/payment/v1/merchant/queryOrder', $request);
-
+            ->post(config('moneyman.providers.telebirr.base_url').'/payment/v1/merchant/queryOrder', $request);
 
         return new PaymentVerifyResponse($response->json('biz_content.order_status'), $response->json('msg'), $response->json(), $response->json('biz_content.merch_order_id'));
     }
@@ -93,8 +93,8 @@ class Telebirr extends Provider
                 'refund_amount' => $amount ? $this->formatter->format($amount) : '0',
                 'refund_currency' => $amount ? $amount->getCurrency()->getCode() : 'ETB',
                 'refund_reason' => $reason ? $reason : 'Customer Request',
-                'notify_url' => config('moneyman.providers.telebirr.callback_url')
-            ]
+                'notify_url' => config('moneyman.providers.telebirr.callback_url'),
+            ],
         ];
 
         $request['sign'] = $this->sign($request);
@@ -102,11 +102,12 @@ class Telebirr extends Provider
 
         $response = Http::withoutVerifying()
             ->withToken(str()->chopStart($this->generateFabricToken(), 'Bearer '))
-            ->post(config('moneyman.providers.telebirr.base_url') . '/payment/v1/merchant/refund', $request);
+            ->post(config('moneyman.providers.telebirr.base_url').'/payment/v1/merchant/refund', $request);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             throw new \Exception($response->json('errorMsg'));
         }
+
         return new PaymentRefundResponse($response->json('result'), $response->json('msg'), $response->json(), $response->json('biz_content.merch_order_id'));
     }
 
@@ -114,11 +115,11 @@ class Telebirr extends Provider
     {
         $response = Http::withHeader('X-APP-Key', config('moneyman.providers.telebirr.fabric_app_id'))
             ->withoutVerifying()
-            ->post(config('moneyman.providers.telebirr.base_url') . '/payment/v1/token', [
-                'appSecret' => config('moneyman.providers.telebirr.app_secret')
+            ->post(config('moneyman.providers.telebirr.base_url').'/payment/v1/token', [
+                'appSecret' => config('moneyman.providers.telebirr.app_secret'),
             ]);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             throw new Exception(json_encode($response->json()));
         }
 
@@ -130,9 +131,9 @@ class Telebirr extends Provider
         $response = Http::withHeader('X-APP-Key', config('moneyman.providers.telebirr.fabric_app_id'))
             ->withToken(str()->chopStart($this->generateFabricToken(), 'Bearer '))
             ->withoutVerifying()
-            ->post(config('moneyman.providers.telebirr.base_url') . '/payment/v1/merchant/preOrder', $request);
+            ->post(config('moneyman.providers.telebirr.base_url').'/payment/v1/merchant/preOrder', $request);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             throw new Exception(json_encode($response->json()));
         }
 
@@ -146,15 +147,15 @@ class Telebirr extends Provider
             'redirect_url' => $redirectUrl,
             'appid' => config('moneyman.providers.telebirr.merchant_app_id'),
             'merch_code' => config('moneyman.providers.telebirr.short_code'),
-            'merch_order_id' =>  implode('', explode('_', config('moneyman.ref_prefix'))) . str()->random(10),
+            'merch_order_id' => implode('', explode('_', config('moneyman.ref_prefix'))).str()->random(10),
             'trade_type' => 'WebCheckout',
             'title' => $reason,
             'total_amount' => $this->formatter->format($amount),
             'trans_currency' => $amount->getCurrency()->getCode(),
-            'timeout_express' => (string) config('moneyman.providers.telebirr.timeout') . 'm',
+            'timeout_express' => (string) config('moneyman.providers.telebirr.timeout').'m',
             'payee_identifier' => config('moneyman.providers.telebirr.short_code'),
             'payee_identifier_type' => '04',
-            'payee_type' => '5000'
+            'payee_type' => '5000',
         ];
 
         $request = [
@@ -162,7 +163,7 @@ class Telebirr extends Provider
             'method' => 'payment.preorder',
             'nonce_str' => str()->random(32),
             'version' => '1.0',
-            'biz_content' => $bizContent
+            'biz_content' => $bizContent,
         ];
 
         $request['sign'] = $this->sign($request);
@@ -173,7 +174,7 @@ class Telebirr extends Provider
 
     private function sign(array $request, string|bool $passphrase = false): string
     {
-        $exclude_fields = ["sign", "sign_type", "header", "refund_info", "openType", "raw_request"];
+        $exclude_fields = ['sign', 'sign_type', 'header', 'refund_info', 'openType', 'raw_request'];
 
         $filtered = array_diff_key($request, array_flip($exclude_fields));
         if (isset($filtered['biz_content']) && is_array($filtered['biz_content'])) {
@@ -184,13 +185,12 @@ class Telebirr extends Provider
 
         $pairs = [];
         foreach ($filtered as $k => $v) {
-            $pairs[] = $k . '=' . $v;
+            $pairs[] = $k.'='.$v;
         }
         $stringApplet = implode('&', $pairs);
 
-
-        $pem = "-----BEGIN PRIVATE KEY-----\n" .
-            chunk_split(config('moneyman.providers.telebirr.private_key'), 64, "\n") .
+        $pem = "-----BEGIN PRIVATE KEY-----\n".
+            chunk_split(config('moneyman.providers.telebirr.private_key'), 64, "\n").
             "-----END PRIVATE KEY-----\n";
         $private = PublicKeyLoader::load($pem, $passphrase);
 
@@ -205,12 +205,12 @@ class Telebirr extends Provider
     private function createRawRequest(string $prepayId)
     {
         $maps = [
-            "appid"      => config('moneyman.providers.telebirr.merchant_app_id'),
-            "merch_code" => config('moneyman.providers.telebirr.short_code'),
-            "nonce_str"  => str()->random(32),
-            "prepay_id"  => $prepayId,
-            "timestamp"  => (string) now()->timestamp,
-            "sign_type" => 'SHA256WithRSA',
+            'appid' => config('moneyman.providers.telebirr.merchant_app_id'),
+            'merch_code' => config('moneyman.providers.telebirr.short_code'),
+            'nonce_str' => str()->random(32),
+            'prepay_id' => $prepayId,
+            'timestamp' => (string) now()->timestamp,
+            'sign_type' => 'SHA256WithRSA',
         ];
 
         $sign = $this->sign($maps);
@@ -218,7 +218,7 @@ class Telebirr extends Provider
 
         $pairs = [];
         foreach ($maps as $k => $v) {
-            $pairs[] = $k . '=' . $v;
+            $pairs[] = $k.'='.$v;
         }
 
         return implode('&', $pairs);

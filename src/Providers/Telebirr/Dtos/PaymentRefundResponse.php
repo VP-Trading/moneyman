@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alazark94\MoneyMan\Providers\Telebirr\Dtos;
 
 use Alazark94\MoneyMan\Contracts\Responses\PaymentRefundResponse as PaymentRefundResponseContract;
-
 
 class PaymentRefundResponse implements PaymentRefundResponseContract
 {

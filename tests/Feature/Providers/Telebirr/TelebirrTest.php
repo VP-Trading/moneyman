@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use Alazark94\MoneyMan\MoneyMan;
 use Alazark94\MoneyMan\ValueObjects\User;
-use Illuminate\Support\Facades\Http;
 use Money\Money;
 
-it('initiates a transaction', function () {
+it('initiates a transaction', function (): void {
 
     $response = MoneyMan::provider('telebirr')->initiate(
         Money::ETB(100),
@@ -19,17 +20,15 @@ it('initiates a transaction', function () {
         reason: 'Payment'
     );
 
-
     expect($response->status)->toBe('success');
     expect($response->checkoutUrl)->toBeString();
     expect($response->transactionId)->toBeString();
 });
 
-
 it('throws invalid argument exception if secret key is not set', function (): void {
     config()->set('moneyman.providers.telebirr.merchant_app_id', null);
 
-    expect(fn() => MoneyMan::provider('telebirr')->initiate(
+    expect(fn () => MoneyMan::provider('telebirr')->initiate(
         Money::ETB(100),
         new User(
             firstName: 'John',

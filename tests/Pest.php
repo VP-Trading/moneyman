@@ -8,7 +8,7 @@ use Tests\TestCase;
 uses(TestCase::class)->in('Feature', 'Unit');
 uses(RefreshDatabase::class)->in('Feature', 'Unit');
 
-beforeAll(function () {
+beforeAll(function (): void {
     // Set Chapa environmental variables.
     config()->set('moneyman.providers.chapa.secret_key', 'test-secret-key');
     config()->set('moneyman.providers.chapa.callback_url', 'test-callback-url');
