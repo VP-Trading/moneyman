@@ -47,6 +47,13 @@
             "pestphp/pest-plugin": true
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vptrading\\MoneyMan\\MoneyManServiceProvider"
+            ]
+        }
+    },
     "scripts": {
         "refactor": "rector",
         "lint": "pint",

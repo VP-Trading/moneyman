@@ -1,4 +1,4 @@
-# Chapa Laravel Package
+# MoneyMan Laravel Package
 
 [![Total Downloads](https://poser.pugx.org/vp-trading/moneyman/d/total.svg)](https://packagist.org/packages/vp-trading/moneyman)
 [![Latest Stable Version](https://poser.pugx.org/vp-trading/moneyman/v/stable.svg)](https://packagist.org/packages/vp-trading/moneyman)
