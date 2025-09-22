@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/vp-trading/moneyman)](https://packagist.org/packages/vp-trading/moneyman)
 [![PHP Version Require](https://img.shields.io/packagist/php-v/vp-trading/moneyman)](https://packagist.org/packages/vp-trading/moneyman)
 [![License](https://img.shields.io/packagist/l/vp-trading/moneyman)](https://packagist.org/packages/vp-trading/moneyman)
-[![CI](https://github.com/vp-trading/moneyman/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vp-trading/moneyman/actions/workflows/ci.yml)
+![CI](https://img.shields.io/github/actions/workflow/status/vp-trading/moneyman/ci.yaml)
 [![Code Style](https://img.shields.io/badge/code_style-Laravel_Pint-orange.svg)](https://github.com/laravel/pint)
 [![Larastan](https://img.shields.io/badge/static%20analysis-Larastan-blue)](https://github.com/nunomaduro/larastan)
 
