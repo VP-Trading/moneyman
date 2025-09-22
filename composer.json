@@ -41,6 +41,7 @@
         "larastan/larastan": "^3.6",
         "pestphp/pest-plugin-type-coverage": "^3.6"
     },
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
         "allow-plugins": {
