@@ -11,7 +11,7 @@ class MoneyManServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/moneyman.php', 'moneyman');
-        $this->app->singleton('moneyman', fn () => new MoneyManManager);
+        $this->app->singleton('moneyman', fn ($app) => new MoneyManManager);
     }
 
     public function boot(): void
