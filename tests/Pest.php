@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../', '.env.testing');
-$dotenv->load();
-
-// use Orchestra\Testbench\TestCase;
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
