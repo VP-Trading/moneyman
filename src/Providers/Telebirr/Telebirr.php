@@ -148,7 +148,7 @@ class Telebirr extends Provider
             'appid' => config('moneyman.providers.telebirr.merchant_app_id'),
             'merch_code' => config('moneyman.providers.telebirr.short_code'),
             'merch_order_id' => implode('', explode('_', config('moneyman.ref_prefix'))).str()->random(10),
-            'trade_type' => 'WebCheckout',
+            'trade_type' => 'Checkout',
             'title' => $reason,
             'total_amount' => $this->formatter->format($amount),
             'trans_currency' => $amount->getCurrency()->getCode(),
