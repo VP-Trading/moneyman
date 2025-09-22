@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Alazark94\MoneyMan\Providers\SantimPay\Factories;
 
 use Alazark94\MoneyMan\Contracts\Factories\ProviderResponse;
-use Alazark94\MoneyMan\Contracts\Responses\TransactionResponse;
 use Alazark94\MoneyMan\Providers\SantimPay\Dtos\PaymentInitiateResponse;
 
 class PaymentInitiateFactory implements ProviderResponse
 {
-    public static function fromApiResponse(array $response): TransactionResponse
+    public static function fromApiResponse(array $response): PaymentInitiateResponse
     {
         if (array_key_exists('reason', $response)) {
             $message = $response['reason'];
@@ -21,7 +20,7 @@ class PaymentInitiateFactory implements ProviderResponse
             message: $message ?? null,
             transactionId: $response['transactionId'],
             checkoutUrl: $response['url'] ?? null,
-            validationErrors: $validationErrors ?? []
+            validationErrors: []
         );
     }
 }
