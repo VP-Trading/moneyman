@@ -1,6 +1,6 @@
 # MoneyMan Laravel Package
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/vp-trading/moneyman)](https://packagist.org/packages/vp-trading/moneyman)
+![Packagist Version](https://img.shields.io/packagist/v/vp-trading/moneyman?label=latest)
 [![Total Downloads](https://img.shields.io/packagist/dt/vp-trading/moneyman)](https://packagist.org/packages/vp-trading/moneyman)
 [![PHP Version Require](https://img.shields.io/packagist/php-v/vp-trading/moneyman)](https://packagist.org/packages/vp-trading/moneyman)
 [![License](https://img.shields.io/packagist/l/vp-trading/moneyman)](https://packagist.org/packages/vp-trading/moneyman)
