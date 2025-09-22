@@ -94,6 +94,8 @@ return redirect($response->checkoutUrl);
 
 The initiate response is a DTO that consists of the `status` of of the request, `message` if the provider has one, transactionId, and `checkoutUrl` if the request was successful.
 
+> For telebirr you will need to wrap the `checkoutUrl` provided in an `<a>` tag for it to work or else you will see an error: "**Payment cannot be completed.** The required parameter of the request is empty, or the parameter is incorrectly filled."
+
 ### Verify Payment
 
 ```php
