@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Providers\SantimPay;
+namespace Vptrading\MoneyMan\Providers\SantimPay;
 
-use Alazark94\MoneyMan\Contracts\Responses\PaymentInitiateResponse;
-use Alazark94\MoneyMan\Contracts\Responses\PaymentRefundResponse;
-use Alazark94\MoneyMan\Contracts\Responses\PaymentVerifyResponse;
-use Alazark94\MoneyMan\Providers\Provider;
-use Alazark94\MoneyMan\Providers\SantimPay\Dtos\PaymentInitiateResponse as DtosPaymentInitiateResponse;
-use Alazark94\MoneyMan\Providers\SantimPay\Factories\PaymentInitiateFactory;
-use Alazark94\MoneyMan\Providers\SantimPay\Factories\PaymentVerifyFactory;
-use Alazark94\MoneyMan\ValueObjects\User;
 use Exception;
 use Firebase\JWT\JWT;
 use Illuminate\Support\Facades\Http;
 use LogicException;
 use Money\Money;
+use Vptrading\MoneyMan\Contracts\Responses\PaymentInitiateResponse;
+use Vptrading\MoneyMan\Contracts\Responses\PaymentRefundResponse;
+use Vptrading\MoneyMan\Contracts\Responses\PaymentVerifyResponse;
+use Vptrading\MoneyMan\Providers\Provider;
+use Vptrading\MoneyMan\Providers\SantimPay\Dtos\PaymentInitiateResponse as DtosPaymentInitiateResponse;
+use Vptrading\MoneyMan\Providers\SantimPay\Factories\PaymentInitiateFactory;
+use Vptrading\MoneyMan\Providers\SantimPay\Factories\PaymentVerifyFactory;
+use Vptrading\MoneyMan\ValueObjects\User;
 
 class SantimPay extends Provider
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Providers\Telebirr\Dtos;
+namespace Vptrading\MoneyMan\Providers\Telebirr\Dtos;
 
-use Alazark94\MoneyMan\Contracts\Responses\PaymentInitiateResponse as PaymentInitiateResponseContract;
+use Vptrading\MoneyMan\Contracts\Responses\PaymentInitiateResponse as PaymentInitiateResponseContract;
 
 class PaymentInitiateResponse implements PaymentInitiateResponseContract
 {

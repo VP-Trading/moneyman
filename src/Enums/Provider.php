@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Enums;
+namespace Vptrading\MoneyMan\Enums;
 
 enum Provider: string
 {

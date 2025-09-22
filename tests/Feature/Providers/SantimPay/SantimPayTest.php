@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Alazark94\MoneyMan\MoneyMan;
-use Alazark94\MoneyMan\ValueObjects\User;
 use Illuminate\Support\Facades\Http;
 use Money\Money;
+use Vptrading\MoneyMan\MoneyMan;
+use Vptrading\MoneyMan\ValueObjects\User;
 
 it('initiates a transaction', function (): void {
     Http::fake(function () {

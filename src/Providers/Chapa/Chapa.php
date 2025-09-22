@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Providers\Chapa;
+namespace Vptrading\MoneyMan\Providers\Chapa;
 
-use Alazark94\MoneyMan\Providers\Chapa\Dtos\PaymentInitiateResponse;
-use Alazark94\MoneyMan\Providers\Chapa\Dtos\PaymentRefundResponse;
-use Alazark94\MoneyMan\Providers\Chapa\Dtos\PaymentVerifyResponse;
-use Alazark94\MoneyMan\Providers\Chapa\Factories\PaymentInitiateFactory;
-use Alazark94\MoneyMan\Providers\Chapa\Factories\PaymentRefundFactory;
-use Alazark94\MoneyMan\Providers\Chapa\Factories\PaymentVerifyFactory;
-use Alazark94\MoneyMan\Providers\Provider;
-use Alazark94\MoneyMan\ValueObjects\User;
 use Illuminate\Support\Facades\Http;
 use Money\Money;
+use Vptrading\MoneyMan\Providers\Chapa\Dtos\PaymentInitiateResponse;
+use Vptrading\MoneyMan\Providers\Chapa\Dtos\PaymentRefundResponse;
+use Vptrading\MoneyMan\Providers\Chapa\Dtos\PaymentVerifyResponse;
+use Vptrading\MoneyMan\Providers\Chapa\Factories\PaymentInitiateFactory;
+use Vptrading\MoneyMan\Providers\Chapa\Factories\PaymentRefundFactory;
+use Vptrading\MoneyMan\Providers\Chapa\Factories\PaymentVerifyFactory;
+use Vptrading\MoneyMan\Providers\Provider;
+use Vptrading\MoneyMan\ValueObjects\User;
 
 class Chapa extends Provider
 {

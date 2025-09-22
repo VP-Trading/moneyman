@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Alazark94\MoneyMan\Providers\Telebirr;
+namespace Vptrading\MoneyMan\Providers\Telebirr;
 
-use Alazark94\MoneyMan\Providers\Provider;
-use Alazark94\MoneyMan\Providers\Telebirr\Dtos\PaymentInitiateResponse;
-use Alazark94\MoneyMan\Providers\Telebirr\Dtos\PaymentRefundResponse;
-use Alazark94\MoneyMan\Providers\Telebirr\Dtos\PaymentVerifyResponse;
-use Alazark94\MoneyMan\ValueObjects\User;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Money\Money;
 use phpseclib3\Crypt\PublicKeyLoader;
+use Vptrading\MoneyMan\Providers\Provider;
+use Vptrading\MoneyMan\Providers\Telebirr\Dtos\PaymentInitiateResponse;
+use Vptrading\MoneyMan\Providers\Telebirr\Dtos\PaymentRefundResponse;
+use Vptrading\MoneyMan\Providers\Telebirr\Dtos\PaymentVerifyResponse;
+use Vptrading\MoneyMan\ValueObjects\User;
 
 class Telebirr extends Provider
 {
