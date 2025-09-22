@@ -119,3 +119,5 @@ $response = MoneyMan::provider(Provider::Chapa)->refund($transactionId, Money::E
 ```
 
 The refund response is a DTO that consists of the `status` of of the request, `message` if the provider has one, `transactionId`, and `data` which is the response from the provider.
+
+> **Note:** Chapa's refund does not use the transactionId you provided but instead the reference Id they assign to the transaction.
