@@ -28,7 +28,7 @@ To install the `MoneyMan` package, follow these steps:
 
 3. **Configure your `.env` file:**
 
-    Add your Chapa API keys:
+    Add your Providers API keys:
 
     ```bash
     MONEYMAN_REF_PREFIX=
