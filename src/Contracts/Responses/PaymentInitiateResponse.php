@@ -6,5 +6,5 @@ namespace Vptrading\MoneyMan\Contracts\Responses;
 
 interface PaymentInitiateResponse extends TransactionResponse
 {
-    //
+    public function getCheckoutUrl(): ?string;
 }

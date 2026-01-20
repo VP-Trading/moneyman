@@ -31,4 +31,9 @@ class PaymentInitiateResponse implements PaymentInitiateResponseContract
     {
         return $this->transactionId;
     }
+
+    public function getCheckoutUrl(): ?string
+    {
+        return $this->checkoutUrl;
+    }
 }
