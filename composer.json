@@ -26,7 +26,7 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "illuminate/http": "^11.0 || ^12.0",
         "moneyphp/money": "^4.7",
         "phpseclib/phpseclib": "^3.0",
