@@ -6,8 +6,6 @@ namespace Vptrading\MoneyMan\Providers\Chapa;
 
 use Illuminate\Http\Request;
 use Vptrading\MoneyMan\Contracts\WebhookDriver as WebhookDriverInterface;
-use Vptrading\MoneyMan\Dtos\WebhookEvent;
-use Vptrading\MoneyMan\Enums\Provider;
 use Vptrading\MoneyMan\Exceptions\InvalidSignatureException;
 
 class WebhookDriver implements WebhookDriverInterface
@@ -33,16 +31,6 @@ class WebhookDriver implements WebhookDriverInterface
 
         $content = json_decode($request->getContent(), true);
 
-        return new WebhookEvent(
-            Provider::Chapa,
-            $content['event'],
-            $content['tx_ref'],
-            $content['reference'],
-            $content['status'],
-            (float) $content['amount'],
-            $content['currency'],
-            (float) $content['charge'],
-            $content
-        );
+        return new WebhookEvent($content);
     }
 }

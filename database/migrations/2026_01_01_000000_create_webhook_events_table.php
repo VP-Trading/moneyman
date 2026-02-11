@@ -13,12 +13,12 @@ return new class extends Migration
         Schema::create('webhook_events', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('provider');
-            $table->string('event_type')->nullable();
+            $table->string('is_success')->default(false);
             $table->string('tx_ref')->nullable();
             $table->string('provider_ref')->nullable();
             $table->string('status');
-            $table->decimal('amount', 10, 2);
-            $table->decimal('charge', 10, 2)->nullable();
+            $table->decimal('amount');
+            $table->decimal('charge')->nullable();
             $table->string('currency', 10)->default('ETB');
             $table->json('data')->nullable();
             $table->unique(['event_type', 'tx_ref']);

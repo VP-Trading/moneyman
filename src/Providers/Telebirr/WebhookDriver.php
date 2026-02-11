@@ -6,22 +6,12 @@ namespace Vptrading\MoneyMan\Providers\Telebirr;
 
 use Illuminate\Http\Request;
 use Vptrading\MoneyMan\Contracts\WebhookDriver as WebhookDriverInterface;
-use Vptrading\MoneyMan\Dtos\WebhookEvent;
-use Vptrading\MoneyMan\Enums\Provider;
 use Vptrading\MoneyMan\Exceptions\InvalidSignatureException;
 
 class WebhookDriver implements WebhookDriverInterface
 {
     public function verify(Request $request): bool
     {
-        $secret = config('chapa.webhook_secret');
-
-        $hash = hash_hmac('sha256', $request->getContent(), $secret);
-
-        if (! hash_equals($hash, $request->header('x-chapa-signature'))) {
-            return false;
-        }
-
         return true;
     }
 
@@ -33,15 +23,6 @@ class WebhookDriver implements WebhookDriverInterface
 
         $content = json_decode($request->getContent(), true);
 
-        return new WebhookEvent(
-            Provider::Chapa,
-            $content['event'],
-            $content['tx_ref'],
-            $content['status'],
-            $content['amount'],
-            $content['currency'],
-            $content['charge'],
-            $content
-        );
+        return new WebhookEvent($content);
     }
 }

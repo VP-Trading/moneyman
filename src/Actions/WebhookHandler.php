@@ -22,15 +22,15 @@ class WebhookHandler
         $event = $driver->parse($request);
 
         WebhookEvent::firstOrCreate([
-            'provider' => $event->provider,
-            'event_type' => $event->eventType,
-            'tx_ref' => $event->txRef,
-            'provider_ref' => $event->providerReference,
-            'status' => $event->status,
-            'amount' => $event->amount,
-            'charge' => $event->charge ?? null,
-            'currency' => $event->currency ?? 'ETB',
-            'data' => $event->meta,
+            'provider' => $event->provider(),
+            'is_success' => $event->isSuccess(),
+            'tx_ref' => $event->getReference(),
+            'provider_ref' => $event->getProviderReference(),
+            'status' => $event->getStatus(),
+            'amount' => $event->getAmount(),
+            'charge' => $event->getCharge(),
+            'currency' => $event->getCurrency(),
+            'data' => $event->raw(),
         ]);
     }
 }
