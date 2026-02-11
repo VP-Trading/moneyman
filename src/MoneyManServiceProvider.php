@@ -19,7 +19,7 @@ class MoneyManServiceProvider extends ServiceProvider
     {
         Model::unguard();
         AboutCommand::add('MoneyMan', fn () => [
-            'Version' => '1.0.0',
+            'Version' => '1.1.0',
         ]);
 
         $this->publishes([
