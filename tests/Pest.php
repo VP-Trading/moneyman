@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
+use Dotenv\Dotenv;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 uses(TestCase::class)->in('Feature', 'Unit');
 uses(RefreshDatabase::class)->in('Feature', 'Unit');
+
+if (file_exists(__DIR__.'/../.env.testing')) {
+    Dotenv::createImmutable(__DIR__.'/../', '.env.testing')->load();
+}
 
 beforeAll(function (): void {
     // Set Chapa environmental variables.
