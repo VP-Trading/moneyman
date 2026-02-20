@@ -21,7 +21,7 @@ class WebhookHandler
 
         $event = $driver->parse($request);
 
-        return WebhookEvent::firstOrCreate([
+        return WebhookEvent::updateOrCreate([
             'provider' => $event->provider(),
             'is_success' => $event->isSuccess(),
             'tx_ref' => $event->getReference(),

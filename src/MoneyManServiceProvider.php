@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vptrading\MoneyMan;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\ServiceProvider;
 use Vptrading\MoneyMan\Contracts\WebhookRegistry;
@@ -17,7 +16,6 @@ class MoneyManServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        Model::unguard();
         AboutCommand::add('MoneyMan', fn () => [
             'Version' => '1.1.0',
         ]);
