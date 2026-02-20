@@ -15,13 +15,13 @@ class WebhookHandler
         //
     }
 
-    public function handle(Request $request, string $provider)
+    public function handle(Request $request, string $provider): WebhookEvent
     {
         $driver = $this->registry->get($provider);
 
         $event = $driver->parse($request);
 
-        WebhookEvent::firstOrCreate([
+        return WebhookEvent::firstOrCreate([
             'provider' => $event->provider(),
             'is_success' => $event->isSuccess(),
             'tx_ref' => $event->getReference(),
