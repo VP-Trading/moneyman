@@ -21,7 +21,7 @@ class WebhookEvent implements WebhookEventInterface
 
     public function isSuccess(): bool
     {
-        if ($this->payload['trans_currency'] !== 'Completed') {
+        if ($this->payload['trade_status'] !== 'Completed') {
             return false;
         }
 

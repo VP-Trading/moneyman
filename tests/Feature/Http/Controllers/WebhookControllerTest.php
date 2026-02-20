@@ -3,10 +3,11 @@
 declare(strict_types=1);
 
 use Firebase\JWT\JWT;
+use Vptrading\MoneyMan\Exceptions\InvalidSignatureException;
 
 it('stores chapa webhook events', function (): void {
     $this->withoutExceptionHandling();
-    config()->set('chapa.webhook_secret', 'test_secret');
+    config()->set('moneyman.providers.chapa.webhook_secret', 'test_secret');
     $payload = [
         'event' => 'charge.success',
         'first_name' => 'John',
@@ -128,4 +129,45 @@ it('stores santimpay webhook events', function (): void {
         'amount' => 1,
         'currency' => 'ETB',
     ]);
+});
+
+it('rejects chapa webhook events with invalid signature', function (): void {
+    $this->withoutExceptionHandling();
+    config()->set('chapa.webhook_secret', 'test_secret');
+
+    $payload = [
+        'event' => 'charge.success',
+        'tx_ref' => 'TX-INVALID',
+        'reference' => 'REF-INVALID',
+        'amount' => '100.00',
+        'charge' => '3.00',
+        'currency' => 'ETB',
+        'status' => 'success',
+    ];
+
+    expect(fn () => $this->postJson(route('moneyman.webhook', [
+        'provider' => 'chapa',
+    ]), $payload, ['x-chapa-signature' => 'bad-signature']))
+        ->toThrow(InvalidSignatureException::class);
+
+    $this->assertDatabaseCount('webhook_events', 0);
+});
+
+it('rejects santimpay webhook events with invalid signature', function (): void {
+    $this->withoutExceptionHandling();
+
+    $payload = [
+        'txnId' => 'txn-invalid',
+        'refId' => 'ref-invalid',
+        'amount' => '1',
+        'currency' => 'ETB',
+        'status' => 'COMPLETED',
+    ];
+
+    expect(fn () => $this->postJson(route('moneyman.webhook', [
+        'provider' => 'santimpay',
+    ]), $payload, ['signed-token' => 'bad-signature']))
+        ->toThrow(InvalidSignatureException::class);
+
+    $this->assertDatabaseCount('webhook_events', 0);
 });

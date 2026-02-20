@@ -14,6 +14,8 @@ class WebhookEvent extends Model
 
     protected $table = 'webhook_events';
 
+    protected $guarded = [];
+
     protected $casts = [
         'provider' => Provider::class,
         'data' => 'array',

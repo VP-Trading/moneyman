@@ -63,7 +63,7 @@ class Telebirr extends Provider
             'biz_content' => [
                 'appid' => config('moneyman.providers.telebirr.merchant_app_id'),
                 'merch_code' => config('moneyman.providers.telebirr.short_code'),
-                'merch_order_id' => 'glRDRSe9U6',
+                'merch_order_id' => $transactionId,
             ],
         ];
 

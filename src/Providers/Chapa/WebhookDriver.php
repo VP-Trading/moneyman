@@ -12,7 +12,7 @@ class WebhookDriver implements WebhookDriverInterface
 {
     public function verify(Request $request): bool
     {
-        $secret = config('chapa.webhook_secret');
+        $secret = config('moneyman.providers.chapa.webhook_secret');
 
         $hash = hash_hmac('sha256', $request->getContent(), $secret);
 
