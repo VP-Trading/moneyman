@@ -21,16 +21,20 @@ class WebhookHandler
 
         $event = $driver->parse($request);
 
-        return WebhookEvent::updateOrCreate([
-            'provider' => $event->provider(),
-            'is_success' => $event->isSuccess(),
-            'tx_ref' => $event->getReference(),
-            'provider_ref' => $event->getProviderReference(),
-            'status' => $event->getStatus(),
-            'amount' => $event->getAmount(),
-            'charge' => $event->getCharge(),
-            'currency' => $event->getCurrency(),
-            'data' => $event->raw(),
-        ]);
+        return WebhookEvent::updateOrCreate(
+            [
+                'provider' => $event->provider(),
+                'tx_ref' => $event->getReference(),
+            ],
+            [
+                'is_success' => $event->isSuccess(),
+                'provider_ref' => $event->getProviderReference(),
+                'status' => $event->getStatus(),
+                'amount' => $event->getAmount(),
+                'charge' => $event->getCharge(),
+                'currency' => $event->getCurrency(),
+                'data' => $event->raw(),
+            ]
+        );
     }
 }
