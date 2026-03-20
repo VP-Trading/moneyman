@@ -49,7 +49,7 @@ it('throws invalid argument exception if secret key is not set', function (): vo
             phoneNumber: '1234567890'
         ),
         'https://example.com/return'
-    ))->toThrow(\InvalidArgumentException::class);
+    ))->toThrow(InvalidArgumentException::class);
 });
 
 it('verifies payments', function (): void {
