@@ -105,7 +105,7 @@ class Telebirr extends Provider
             ->post(config('moneyman.providers.telebirr.base_url').'/payment/v1/merchant/refund', $request);
 
         if (! $response->successful()) {
-            throw new \Exception($response->json('errorMsg'));
+            throw new Exception($response->json('errorMsg'));
         }
 
         return new PaymentRefundResponse($response->json('result'), $response->json('msg'), $response->json(), $response->json('biz_content.merch_order_id'));

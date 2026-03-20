@@ -6,13 +6,14 @@ namespace Tests;
 
 use Illuminate\Contracts\Config\Repository;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Vptrading\MoneyMan\MoneyManServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {
     protected function getPackageProviders($app)
     {
         return [
-            \Vptrading\MoneyMan\MoneyManServiceProvider::class,
+            MoneyManServiceProvider::class,
         ];
     }
 

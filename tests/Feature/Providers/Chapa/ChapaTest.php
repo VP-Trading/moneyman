@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Http;
 use Money\Money;
+use Vptrading\ChapaLaravel\Dtos\AcceptPaymentResponse;
 use Vptrading\MoneyMan\MoneyMan;
 use Vptrading\MoneyMan\ValueObjects\User;
 
@@ -18,7 +19,7 @@ it('initiates a transaction', function (): void {
         );
     });
 
-    /** @var \Vptrading\ChapaLaravel\Dtos\AcceptPaymentResponse $response */
+    /** @var AcceptPaymentResponse $response */
     $response = MoneyMan::provider('chapa')->initiate(
         Money::ETB(100),
         new User(
@@ -77,7 +78,7 @@ it('throws invalid argument exception if secret key is not set', function (): vo
             phoneNumber: '1234567890'
         ),
         'https://example.com/return'
-    ))->toThrow(\InvalidArgumentException::class);
+    ))->toThrow(InvalidArgumentException::class);
 });
 
 it('verifies payments', function (): void {
