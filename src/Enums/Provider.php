@@ -11,4 +11,6 @@ enum Provider: string
     case Chapa = 'chapa';
 
     case SantimPay = 'santimpay';
+
+    case BoaUssd = 'boa_ussd';
 }
