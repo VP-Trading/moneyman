@@ -26,7 +26,7 @@ class PaymentInitiateResponse implements PaymentInitiateResponseContract
     #[Override]
     public function getCheckoutUrl(): ?string
     {
-        throw new \LogicException('USSD Payment does not have checkout url');
+        return null;
     }
 
     #[Override]
