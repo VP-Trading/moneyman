@@ -54,6 +54,14 @@ To install the `MoneyMan` package, follow these steps:
     MONEYMAN_TELEBIRR_TIMEOUT=
     MONEYMAN_TELEBIRR_CALLBACK_URL=
     MONEYMAN_TELEBIRR_WEB_BASE_URL=
+
+    MONEYMAN_BOA_USSD_BASE_URL=
+    MONEYMAN_BOA_USSD_CLIENT_ID=
+    MONEYMAN_BOA_USSD_CLIENT_SECRET=
+    MONEYMAN_BOA_USSD_REFRESH_TOKEN=
+    MONEYMAN_BOA_USSD_MERCHANT_NAME=
+    MONEYMAN_BOA_USSD_MERCHANT_ACCOUNT=
+    MONEYMAN_BOA_USSD_API_KEY=
     ```
 
 4. **Ready to use!**
@@ -67,6 +75,7 @@ To install the `MoneyMan` package, follow these steps:
 | Chapa        | ✅                     | ✅                 | ✅                 |
 | Telebirr     | ✅                     | ✅                 | ✅                 |
 | SantimPay    | ✅                     | ✅                 | ❌                 |
+| BoaUssd      | ✅                     | ❌                 | ❌                 |
 
 ## Usage
 
@@ -100,6 +109,8 @@ return redirect($response->checkoutUrl);
 The initiate response is a DTO that consists of the `status` of of the request, `message` if the provider has one, transactionId, and `checkoutUrl` if the request was successful.
 
 > For telebirr you will need to wrap the `checkoutUrl` provided in an `<a>` tag for it to work or else you will see an error: "**Payment cannot be completed.** The required parameter of the request is empty, or the parameter is incorrectly filled."
+>
+> For `BoaUssd`, there is no `checkoutUrl` because it is a USSD flow. The provider returns once the user PIN interaction is completed on the phone.
 
 ### Verify Payment
 

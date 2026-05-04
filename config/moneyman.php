@@ -31,5 +31,14 @@ return [
             'callback_url' => env('MONEYMAN_TELEBIRR_CALLBACK_URL'),
             'web_base_url' => env('MONEYMAN_TELEBIRR_WEB_BASE_URL', 'https://developerportal.ethiotelebirr.et:38443/payment/web/paygate'),
         ],
+        'boa_ussd' => [
+            'base_url' => env('MONEYMAN_BOA_USSD_BASE_URL'),
+            'client_id' => env('MONEYMAN_BOA_USSD_CLIENT_ID'),
+            'client_secret' => env('MONEYMAN_BOA_USSD_CLIENT_SECRET'),
+            'refresh_token' => env('MONEYMAN_BOA_USSD_REFRESH_TOKEN'),
+            'merchant_name' => env('MONEYMAN_BOA_USSD_MERCHANT_NAME'),
+            'merchant_account' => env('MONEYMAN_BOA_USSD_MERCHANT_ACCOUNT'),
+            'api_key' => env('MONEYMAN_BOA_USSD_API_KEY'),
+        ],
     ],
 ];

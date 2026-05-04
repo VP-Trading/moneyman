@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vptrading\MoneyMan;
 
 use Vptrading\MoneyMan\Enums\Provider as ProviderEnum;
+use Vptrading\MoneyMan\Providers\BoaUssd\BoaUssd;
 use Vptrading\MoneyMan\Providers\Chapa\Chapa;
 use Vptrading\MoneyMan\Providers\Provider;
 use Vptrading\MoneyMan\Providers\SantimPay\SantimPay;
@@ -47,5 +48,10 @@ class MoneyManManager
     protected function createSantimPayProvider(): Provider
     {
         return new SantimPay;
+    }
+
+    protected function createBoa_ussdProvider(): Provider
+    {
+        return new BoaUssd;
     }
 }
