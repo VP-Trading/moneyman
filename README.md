@@ -75,7 +75,7 @@ To install the `MoneyMan` package, follow these steps:
 | Chapa        | ✅                     | ✅                 | ✅                 |
 | Telebirr     | ✅                     | ✅                 | ✅                 |
 | SantimPay    | ✅                     | ✅                 | ❌                 |
-| BoaUssd      | ✅                     | ❌                 | ❌                 |
+| BoaUssd      | ✅                     | ✅                 | ❌                 |
 
 ## Usage
 
@@ -123,6 +123,10 @@ $response = MoneyMan::provider(Provider::Chapa)->verify($transactionId);
 ```
 
 The verify response is a DTO that consists of the `status` of of the request, `message` if the provider has one, `transactionId`, and `data` which is the response from the provider.
+
+> For `BoaUssd`, pass the `billNumber` (reference) returned during initiate as the `transactionId` to `verify()`. The package verifies using `GET /ussd/push/getStatus?reference={billNumber}`.
+>
+> `BoaUssd` tokens are persisted in the `boa_tokens` table and are encrypted at rest using Laravel encrypted model casts. On expired access token / `401`, the package refreshes with refresh token and retries once automatically.
 
 ### Refund Payment
 
