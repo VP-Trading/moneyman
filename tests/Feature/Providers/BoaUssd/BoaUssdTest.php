@@ -13,7 +13,6 @@ beforeEach(function (): void {
     config()->set('app.key', 'base64:'.base64_encode(random_bytes(32)));
 
     Cache::forget('boa_ussd.access_token');
-    Cache::forget('boa_ussd.refresh_token');
     Cache::forget('boa_ussd.token_refresh_lock');
 
     config()->set('moneyman.providers.boa_ussd.base_url', 'https://api.boa.test');
@@ -167,14 +166,11 @@ it('uses stored refresh token when available and rotates tokens', function (): v
         && $request['client_secret'] === config('moneyman.providers.boa_ussd.client_secret'));
 
     expect(Cache::get('boa_ussd.access_token'))->toBe('access-token-2');
-    expect(Cache::get('boa_ussd.refresh_token'))->toBe('refresh-token-2');
     expect((string) BoAToken::query()->value('access_token'))->toBe('access-token-2');
     expect((string) BoAToken::query()->value('refresh_token'))->toBe('refresh-token-2');
 });
 
-it('falls back to configured refresh token when cache is empty', function (): void {
-    Cache::forget('boa_ussd.refresh_token');
-
+it('seeds configured refresh token into db when no refresh token is stored', function (): void {
     Http::fake([
         config('moneyman.providers.boa_ussd.base_url').'/ussd/push/oauth2/token' => Http::response([
             'access_token' => 'access-token-3',
@@ -201,6 +197,8 @@ it('falls back to configured refresh token when cache is empty', function (): vo
 
     Http::assertSent(fn ($request) => $request->url() === config('moneyman.providers.boa_ussd.base_url').'/ussd/push/oauth2/token'
         && $request['refresh_token'] === config('moneyman.providers.boa_ussd.refresh_token'));
+
+    expect((string) BoAToken::query()->value('refresh_token'))->toBe('refresh-token-3');
 });
 
 it('uses stored access token when cache is empty', function (): void {
@@ -234,7 +232,7 @@ it('uses stored access token when cache is empty', function (): void {
 });
 
 it('refreshes token and retries once when initiate returns 401', function (): void {
-    Cache::put('boa_ussd.access_token', 'expired-access-token', now()->addMinutes(5));
+    Cache::put('boa_ussd.access_token', 'expired-access-token', 7200);
 
     Http::fake([
         config('moneyman.providers.boa_ussd.base_url').'/ussd/push/oauth2/token' => Http::response([
@@ -267,10 +265,13 @@ it('refreshes token and retries once when initiate returns 401', function (): vo
     Http::assertSentCount(3);
     Http::assertSent(fn ($request) => $request->url() === config('moneyman.providers.boa_ussd.base_url').'/ussd/push'
         && $request->hasHeader('Authorization', 'Bearer new-access-token'));
+    expect(Cache::get('boa_ussd.access_token'))->toBe('new-access-token');
+    expect((string) BoAToken::query()->value('access_token'))->toBe('new-access-token');
+    expect((string) BoAToken::query()->value('refresh_token'))->toBe('new-refresh-token');
 });
 
 it('returns error verify response after retry when api keeps returning 401', function (): void {
-    Cache::put('boa_ussd.access_token', 'expired-access-token', now()->addMinutes(5));
+    Cache::put('boa_ussd.access_token', 'expired-access-token', 7200);
 
     Http::fake([
         config('moneyman.providers.boa_ussd.base_url').'/ussd/push/oauth2/token' => Http::response([

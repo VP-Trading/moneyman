@@ -25,8 +25,6 @@ class BoaUssd extends Provider
 {
     private const ACCESS_TOKEN_CACHE_KEY = 'boa_ussd.access_token';
 
-    private const REFRESH_TOKEN_CACHE_KEY = 'boa_ussd.refresh_token';
-
     private const TOKEN_LOCK_KEY = 'boa_ussd.token_refresh_lock';
 
     public function __construct()
@@ -99,7 +97,7 @@ class BoaUssd extends Provider
             $storedToken = $this->storedAccessToken();
 
             if ($storedToken !== null && $storedToken !== '') {
-                Cache::put(self::ACCESS_TOKEN_CACHE_KEY, $storedToken, now()->addMinutes(25));
+                Cache::put(self::ACCESS_TOKEN_CACHE_KEY, $storedToken, 7200);
 
                 return $storedToken;
             }
@@ -129,25 +127,16 @@ class BoaUssd extends Provider
         }
 
         $this->storeTokens($accessToken, $refreshToken);
-        Cache::put(self::ACCESS_TOKEN_CACHE_KEY, $accessToken, now()->addMinutes(25));
-        Cache::put(self::REFRESH_TOKEN_CACHE_KEY, $refreshToken, now()->addDays(7));
+        Cache::put(self::ACCESS_TOKEN_CACHE_KEY, $accessToken, 7200);
 
         return $accessToken;
     }
 
     private function resolveRefreshToken(): string
     {
-        $cachedToken = Cache::get(self::REFRESH_TOKEN_CACHE_KEY);
-
-        if (is_string($cachedToken) && $cachedToken !== '') {
-            return $cachedToken;
-        }
-
         $storedToken = $this->storedRefreshToken();
 
         if ($storedToken !== null && $storedToken !== '') {
-            Cache::put(self::REFRESH_TOKEN_CACHE_KEY, $storedToken, now()->addDays(7));
-
             return $storedToken;
         }
 
@@ -156,6 +145,8 @@ class BoaUssd extends Provider
         if ($seedToken === '') {
             throw new RuntimeException('BOA USSD refresh token is not configured.');
         }
+
+        $this->storeRefreshToken($seedToken);
 
         return $seedToken;
     }
@@ -193,6 +184,23 @@ class BoaUssd extends Provider
 
         $record->fill([
             'access_token' => $accessToken,
+            'refresh_token' => $refreshToken,
+        ])->save();
+    }
+
+    private function storeRefreshToken(string $refreshToken): void
+    {
+        $record = BoAToken::query()->first();
+
+        if ($record === null) {
+            BoAToken::query()->create([
+                'refresh_token' => $refreshToken,
+            ]);
+
+            return;
+        }
+
+        $record->fill([
             'refresh_token' => $refreshToken,
         ])->save();
     }
